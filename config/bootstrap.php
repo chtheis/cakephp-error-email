@@ -30,11 +30,11 @@ if (Configure::read('ErrorEmail.email')) {
     }
     $email = new Email(Configure::read('ErrorEmail.emailDeliveryProfile'));
     // Check to make sure we have a to address to send the email to
-    if (!$email->to() && !Configure::read('ErrorEmail.toEmailAddress')) {
+    if (!$email->getTo() && !Configure::read('ErrorEmail.toEmailAddress')) {
         throw new ConfigurationException('ErrorEmail plugin misconfigured, please add the "ErrorEmail.toEmailAddress" configuration value');
     }
     // Check to make sure we have an address to send the email from
-    if (!$email->from() && !Configure::read('ErrorEmail.fromEmailAddress')) {
+    if (!$email->getFrom() && !Configure::read('ErrorEmail.fromEmailAddress')) {
         throw new ConfigurationException('ErrorEmail plugin misconfigured, please add the "ErrorEmail.fromEmailAddress" configuration value');
     }
 }
