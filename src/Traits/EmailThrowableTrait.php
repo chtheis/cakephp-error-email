@@ -71,8 +71,8 @@ trait EmailThrowableTrait
             // Send a different template for php errors
             case $this->_isError($throwable):
                 // Use the error email template
-                $email
-                    ->setTemplate('ErrorEmail.error', 'ErrorEmail.default')
+                $email->viewBuilder()->setTemplate('ErrorEmail.error', 'ErrorEmail.default');
+                $$email
                     ->setSubject($this->_setupSubjectWithSiteAndEnv('An error has been thrown'))
                     ->setViewVars([
                         'error' => $throwable,
@@ -85,8 +85,8 @@ trait EmailThrowableTrait
                 // Break omitted intentionally
             default:
                 // Use the exception email template
+                $email->viewBuilder()->setTemplate('ErrorEmail.exception', 'ErrorEmail.default');
                 $email
-                    ->setTemplate('ErrorEmail.exception', 'ErrorEmail.default')
                     ->setSubject($this->_setupSubjectWithSiteAndEnv('An exception has been thrown'))
                     ->setViewVars([
                         'exception' => $throwable,
