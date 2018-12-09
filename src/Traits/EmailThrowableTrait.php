@@ -72,7 +72,7 @@ trait EmailThrowableTrait
             case $this->_isError($throwable):
                 // Use the error email template
                 $email->viewBuilder()->setTemplate('ErrorEmail.error', 'ErrorEmail.default');
-                $$email
+                $email
                     ->setSubject($this->_setupSubjectWithSiteAndEnv('An error has been thrown'))
                     ->setViewVars([
                         'error' => $throwable,
