@@ -95,7 +95,7 @@ trait EmailThrowableTrait
                     ]);
                 break;
         }
-        $email->emailFormat('both');
+        $email->setEmailFormat('both');
         // Use toEmailAddress if we have it
         if (Configure::read('ErrorEmail.toEmailAddress')) {
             $email->setTo(Configure::read('ErrorEmail.toEmailAddress'));
