@@ -8,7 +8,7 @@ use ErrorEmail\Exception\NoticeException;
 use ErrorEmail\Exception\StrictException;
 use ErrorEmail\Exception\WarningException;
 use ErrorEmail\Traits\EmailThrowableTrait;
-use Exception;
+use Throwable;
 
 /**
  * Extend cakes error handler to add email error functionality
@@ -34,7 +34,7 @@ class ErrorHandler extends CakeErrorHandler
      * @param array|null $context Context
      * @return bool True if error was handled
      */
-    public function handleError($code, $description, $file = null, $line = null, $context = null)
+    public function handleError(int $code, string $description, ?string $file = null, ?int $line = null, ?array $context = null): bool
     {
         if (error_reporting() === 0) {
             return false;
@@ -74,7 +74,7 @@ class ErrorHandler extends CakeErrorHandler
      * @throws \Exception When renderer class not found
      * @see http://php.net/manual/en/function.set-exception-handler.php
      */
-    public function handleException(Exception $exception)
+    public function handleException(Throwable $exception): void
     {
         // Add emailing throwable functionality
         $this->emailThrowable($this->_unwrapException($exception));
@@ -88,7 +88,7 @@ class ErrorHandler extends CakeErrorHandler
      * @param \Exception $exception Exception instance.
      * @return \Throwable (php5 Exception) A throwable or child class
      */
-    protected function _unwrapException(Exception $exception)
+    protected function _unwrapException(Throwable $exception): Throwable
     {
         // PHP7ErrorException must be unwrapped to get the actual \Error class
         if ($exception instanceof PHP7ErrorException) {
