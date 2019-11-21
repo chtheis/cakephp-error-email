@@ -2,7 +2,7 @@
 namespace ErrorEmail\Middleware;
 
 use Cake\Error\Middleware\ErrorHandlerMiddleware as CakeErrorHandlerMiddleware;
-use Psr\Http\MessageẞResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\ServerRequestInterface;
 use ErrorEmail\Traits\EmailThrowableTrait;
 
