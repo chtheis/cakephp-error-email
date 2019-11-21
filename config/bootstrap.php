@@ -42,7 +42,7 @@ if (Configure::read('ErrorEmail.email')) {
 if (Configure::read('ErrorEmail.throttle')) {
     // Use default cache config if app is using default cache config key and hasn't overwrote the config already
     if (Configure::read('ErrorEmail.throttleCache') == key($configValues['Cache']) && !in_array(key($configValues['Cache']), Cache::configured())) {
-        Cache::config($configValues['Cache']);
+        Cache::setConfig($configValues['Cache']);
     }
     // Check to make sure the throttleCache is configured properly
     if (!in_array(Configure::read('ErrorEmail.throttleCache'), Cache::configured())) {

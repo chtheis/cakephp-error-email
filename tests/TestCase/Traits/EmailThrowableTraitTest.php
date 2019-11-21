@@ -6,6 +6,7 @@ use Cake\Core\Configure;
 use Cake\Error\FatalErrorException;
 use Cake\Mailer\Email;
 use Cake\TestSuite\TestCase;
+use Cake\View\ViewBuilder;
 use ErrorEmail\Exception\ConfigurationException;
 use ErrorEmail\Exception\DeprecatedException;
 use ErrorEmail\Exception\NoticeException;
@@ -123,11 +124,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new Exception('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(4))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->exactly(2))
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->exactly(2))
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->exactly(2))
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->exactly(2))
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent twice
         $mailerMock->expects($this->exactly(2))
@@ -160,11 +169,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new Exception('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent once
         $mailerMock->expects($this->once())
@@ -198,11 +215,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new Exception('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(4))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->exactly(2))
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->exactly(2))
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->exactly(2))
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->exactly(2))
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent twice
         $mailerMock->expects($this->exactly(2))
@@ -236,15 +261,23 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new Exception('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('subject')
+            ->method('setSubject')
             ->with('An exception has been thrown on site (local)')
             ->will($this->returnSelf());
         $mailerMock->expects($this->once())
-            ->method('viewVars')
+            ->method('setViewVars')
             ->with([
                 'exception' => $exception,
                 'environment' => 'local',
@@ -278,17 +311,25 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new Exception('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
+            ->method('setSubject')
             ->will($this->returnSelf());
         $mailerMock->expects($this->once())
-            ->method('subject')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('to')
+            ->method('setTo')
             ->with('to@localhost');
         $mailerMock->expects($this->once())
-            ->method('from')
+            ->method('setFrom')
             ->with('from@localhost');
         // We should see email sent once
         $mailerMock->expects($this->once())
@@ -316,12 +357,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new FatalErrorException('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
-            ->with('ErrorEmail.error', 'ErrorEmail.default')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent once
         $mailerMock->expects($this->once())
@@ -367,11 +415,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new Exception('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent once
         $mailerMock->expects($this->once())
@@ -416,11 +472,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new FatalErrorException('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent once
         $mailerMock->expects($this->once())
@@ -466,11 +530,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new WarningException('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent once
         $mailerMock->expects($this->once())
@@ -516,11 +588,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new NoticeException('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent once
         $mailerMock->expects($this->once())
@@ -566,11 +646,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new StrictException('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent once
         $mailerMock->expects($this->once())
@@ -616,11 +704,19 @@ class EmailThrowableTraitTest extends TestCase
         $exception = new DeprecatedException('Test Exception');
         // Mock mailer
         $mailerMock = $this->createMock(Email::class);
+        // Mock view builder
+        $viewBuilderMock = $this->createMock(ViewBuilder::class);
+        $mailerMock->expects($this->exactly(2))
+            ->method('viewBuilder')
+            ->willReturn($viewBuilderMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setTemplate')
+            ->willReturn($mailerMock);
+        $viewBuilderMock->expects($this->once())
+            ->method('setLayout')
+            ->willReturn($mailerMock);
         $mailerMock->expects($this->once())
-            ->method('template')
-            ->will($this->returnSelf());
-        $mailerMock->expects($this->once())
-            ->method('subject')
+            ->method('setSubject')
             ->will($this->returnSelf());
         // We should see email sent once
         $mailerMock->expects($this->once())
