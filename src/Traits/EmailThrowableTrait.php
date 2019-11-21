@@ -55,7 +55,7 @@ trait EmailThrowableTrait
      * Setup the email including what template to use, the subject, what variables to assign
      * who the email is to and from.
      *
-     * Override this function to provide more advanced functionalty
+     * Override this function to provide more advanced functionality
      * such as using different email templates per app exception/error type or sending to different addresses
      * per exception/error type
      *
