@@ -3,8 +3,9 @@ namespace ErrorEmail\Middleware;
 
 use Cake\Error\Middleware\ErrorHandlerMiddleware as CakeErrorHandlerMiddleware;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\ServerRequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use ErrorEmail\Traits\EmailThrowableTrait;
+use Throwable;
 
 /**
  * Error handling middleware.
