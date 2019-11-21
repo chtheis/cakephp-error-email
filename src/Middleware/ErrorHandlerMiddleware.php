@@ -29,7 +29,7 @@ class ErrorHandlerMiddleware extends CakeErrorHandlerMiddleware
         // Add emailing throwable functionality
         $this->emailThrowable($exception);
         // Use parent funcitonality
-        return $this->_callParent($exception, $request, $response);
+        return $this->_callParent($exception, $request);
     }
 
     /**
@@ -40,8 +40,8 @@ class ErrorHandlerMiddleware extends CakeErrorHandlerMiddleware
      * @param \Psr\Http\Message\ResponseInterface $response The response.
      * @return \Psr\Http\Message\ResponseInterface A response
      */
-    protected function _callParent($exception, $request, $response)
+    protected function _callParent($exception, $request)
     {
-        return parent::handleException($exception, $request, $response);
+        return parent::handleException($exception, $request);
     }
 }
