@@ -2,6 +2,8 @@
 namespace ErrorEmail\Middleware;
 
 use Cake\Error\Middleware\ErrorHandlerMiddleware as CakeErrorHandlerMiddleware;
+use Psr\Http\MessageẞResponseInterface;
+use Psr\Http\ServerRequestInterface;
 use ErrorEmail\Traits\EmailThrowableTrait;
 
 /**
@@ -21,7 +23,7 @@ class ErrorHandlerMiddleware extends CakeErrorHandlerMiddleware
      * @param \Psr\Http\Message\ResponseInterface $response The response.
      * @return \Psr\Http\Message\ResponseInterface A response
      */
-    public function handleException($exception, $request, $response)
+    public function handleException(Throwable $exception, ServerRequestInterface $request): ResponseInterface
     {
         // Add emailing throwable functionality
         $this->emailThrowable($exception);
