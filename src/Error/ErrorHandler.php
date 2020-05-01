@@ -8,6 +8,7 @@ use ErrorEmail\Exception\NoticeException;
 use ErrorEmail\Exception\StrictException;
 use ErrorEmail\Exception\WarningException;
 use ErrorEmail\Traits\EmailThrowableTrait;
+use Exception;
 use Throwable;
 
 /**
