@@ -7,6 +7,10 @@
         </tr>
     <?php endif; ?>
     <tr>
+        <td><strong>Referrer:</strong></td>
+        <td><?= $this->request->referer() ?></td>
+    </tr>
+    <tr>
         <td><strong>Error Url:</strong></td>
         <td><?= $this->Url->build($this->request->getAttribute('here'), ['fullBase' => true]) ?></td>
     </tr>
