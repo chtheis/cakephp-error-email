@@ -2,7 +2,7 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
 use Cake\Utility\Hash;
 use ErrorEmail\Exception\ConfigurationException;
 
@@ -25,10 +25,10 @@ Configure::write(
 // If Emailing errors emails is turned on make sure we have the necessary configuration values set
 if (Configure::read('ErrorEmail.email')) {
     // Check to make sure emailDeliveryProfile is configured properly
-    if (!in_array(Configure::read('ErrorEmail.emailDeliveryProfile'), Email::configured())) {
+    if (!in_array(Configure::read('ErrorEmail.emailDeliveryProfile'), Mailer::configured())) {
         throw new ConfigurationException('ErrorEmail plugin misconfigured, please add a valid email delivery profile for key "' . Configure::read('ErrorEmail.emailDeliveryProfile') . '"');
     }
-    $email = new Email(Configure::read('ErrorEmail.emailDeliveryProfile'));
+    $email = new Mailer(Configure::read('ErrorEmail.emailDeliveryProfile'));
     // Check to make sure we have a to address to send the email to
     if (!$email->getTo() && !Configure::read('ErrorEmail.toEmailAddress')) {
         throw new ConfigurationException('ErrorEmail plugin misconfigured, please add the "ErrorEmail.toEmailAddress" configuration value');
