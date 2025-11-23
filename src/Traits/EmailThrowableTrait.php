@@ -4,7 +4,7 @@ namespace ErrorEmail\Traits;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Error\FatalErrorException;
-use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
 use Error;
 use ErrorEmail\Exception\ConfigurationException;
 use ErrorEmail\Exception\DeprecatedException;
@@ -44,11 +44,11 @@ trait EmailThrowableTrait
     /**
      * Get instance of the mailer
      *
-     * @return Cake\Mailer\Email
+     * @return Cake\Mailer\Mailer
      */
     protected function _getMailer()
     {
-        return new Email(Configure::read('ErrorEmail.emailDeliveryProfile'));
+        return new Mailer(Configure::read('ErrorEmail.emailDeliveryProfile'));
     }
 
     /**
@@ -59,11 +59,11 @@ trait EmailThrowableTrait
      * such as using different email templates per app exception/error type or sending to different addresses
      * per exception/error type
      *
-     * @param Cake\Mailer\Email $email Mailer instance
+     * @param Cake\Mailer\Mailer $email Mailer instance
      * @param \Throwable (php5 \Exception) $throwable Throwable instance
-     * @return Cake\Mailer\Email
+     * @return Cake\Mailer\Mailer
      */
-    protected function _setupEmail(Email $email, $throwable)
+    protected function _setupEmail(Mailer $email, $throwable)
     {
         // Switch template and variables assigned per throwable class to customize feedback
         // Can also potentially change to and from adresses to send it to different teams to handle
